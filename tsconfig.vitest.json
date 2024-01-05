@@ -5,6 +5,7 @@
     "outDir": "dist",
     "composite": true,
     "lib": [],
-    "types": ["node", "jsdom"]
+    "types": ["node", "jsdom"],
+    "noUnusedLocals": false
   }
 }

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { NDataTable, NButton, useMessage, NTag } from 'naive-ui'
+import { NDataTable, NButton, useMessage, NTag, NText } from 'naive-ui'
 import type { DataTableColumns } from 'naive-ui'
 import { ref, h, onMounted } from 'vue'
 import { getAllMeetings } from '@/api/meeting.js'
@@ -20,6 +20,7 @@ type RowData = {
   location: string
   capacity: string
   status: string
+  tips:string
   // action: string
 }
 
@@ -70,7 +71,21 @@ const createColumns = ({
           '查看详情'
         )
       }
-    }
+    },
+    {
+      title: '',
+      key: 'tips',
+      render(row) {
+        return h(
+          NText,
+          {
+            size: 'large', 
+            style: 'color: #ff0000'
+          },
+          row.tips
+        )
+      }
+    },
   ]
 }
 const createData = (): RowData[] => [
@@ -78,71 +93,81 @@ const createData = (): RowData[] => [
     name: '二教101',
     location: '沙河校区第二教学楼101',
     capacity: '100人',
-    status: '空闲'
+    status: '空闲',
+    tips:'系统智能推荐'
     // action: '预定'
   },
   {
     name: '二教103',
     location: '沙河校区第二教学楼103',
     capacity: '150人',
-    status: '使用中'
+    status: '使用中',
+    tips:'系统智能推荐'
     // action: '预定'
   },
   {
     name: '三教203',
     location: '沙河校区第三教学楼203',
     capacity: '150人',
-    status: '使用中'
+    status: '使用中',
+    tips:''
     // action: '预定'
   },
   {
     name: '会议室3',
     location: '沙河校区主楼215',
     capacity: '30人',
-    status: '空闲'
+    status: '空闲',
+    tips:''
     // action: '预定'
   },
   {
     name: '会议室4',
     location: '清水河校区品A301',
     capacity: '30人',
-    status: '空闲'
+    status: '空闲',
+    tips:''
     // action: '预定'
   },
   {
     name: '会议室5',
     location: '沙河校区主楼301',
     capacity: '30人',
-    status: '使用中'
+    status: '使用中',
+    tips:''
     // action: '预定'
   }
 ]
 const createData2 = (): RowData[] => [
   {
-    name: '二教101',
+    name: '教研室101',
     location: '沙河校区第二教学楼101',
     capacity: '100人',
-    status: '空闲'
+    status: '空闲',
+    tips:'系统智能推荐'
     // action: '预定'
   },
   {
-    name: '会议室3',
+    name: '教研室3',
     location: '沙河校区主楼215',
     capacity: '30人',
-    status: '空闲'
+    status: '空闲',
+    tips:''
     // action: '预定'
   },
   {
-    name: '会议室4',
+    name: '教研室4',
     location: '清水河校区品A301',
     capacity: '30人',
-    status: '空闲'
+    status: '空闲',
+    tips:''
     // action: '预定'
   }
 ]
 const form = ref({
   date: '',
-  status: '所有'
+  status: '所有',
+  input:''
 })
 const formLabelWidth = '90px'
 const options = [
@@ -182,9 +207,12 @@ const handle = () => {
           </el-option>
         </el-select>
       </el-form-item>
+      <el-form-item label="输入" :label-width="formLabelWidth">
+        <el-input v-model="form.input" placeholder="输入会议室名称或位置" style="width: 220px;"></el-input>
+      </el-form-item>
     </el-form>
-    <el-button type="primary" class="w-40" @click="handle">查询</el-button>
-    <div class="mt-3 mb-3">会议室列表</div>
+    <el-button type="primary" class="w-40" @click="handle">搜索</el-button>
+    <div class="mt-3 mb-3 ml-3 font-bold">会议室列表</div>
     <div>
       <n-data-table
         :columns="

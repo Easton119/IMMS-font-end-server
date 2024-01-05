@@ -1,29 +1,30 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import axios from 'axios'
 import qs from 'qs'
 const account = ref('')
 const pwd = ref('')
-
+const router = useRouter()
 const cli = () => {
   console.log('##')
-
-  axios({
-    method: 'get',
-    url: 'http://124.222.236.194:7001/api/search/QSearch',
-    params: {
-      athr: '余华'
-    },
-    paramsSerializer: function (params) {
-      return qs.stringify(params, { arrayFormat: 'repeat' })
-    }
-  })
-    .then((res) => {
-      console.log(res)
-    })
-    .catch((err) => {
-      console.log(err)
-    })
+  router.push('/index');
+  // axios({
+  //   method: 'get',
+  //   url: 'http://124.222.236.194:7001/api/search/QSearch',
+  //   params: {
+  //     athr: '余华'
+  //   },
+  //   paramsSerializer: function (params) {
+  //     return qs.stringify(params, { arrayFormat: 'repeat' })
+  //   }
+  // })
+  //   .then((res) => {
+  //     console.log(res)
+  //   })
+  //   .catch((err) => {
+  //     console.log(err)
+  //   })
   console.log('22')
 }
 </script>
@@ -49,7 +50,7 @@ const cli = () => {
         ></el-input>
         <div class="flex justify-between w-4/5 text-gray-400 text-sm">
           <div>注册</div>
-          <div>忘记密码？</div>
+          <div>忘记密码?</div>
         </div>
         <el-button class="w-4/5" type="primary" @click="cli">LOGIN</el-button>
       </div>
